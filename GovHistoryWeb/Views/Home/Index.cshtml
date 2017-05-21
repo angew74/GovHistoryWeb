@@ -1,0 +1,74 @@
+﻿@model GovHistoryRepository.Identity.UserViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        Benvenuti nell'Applicazione GOV HISTORY
+    </div>
+</md-toolbar>
+
+
+<md-content layout-padding>
+    <div>
+        <b><i>Informazioni</i></b>
+        <big><b><i>Messaggi Utente</i></b></big>
+        <br />
+        I servizi abilitati per il tuo profilo sono elencati nel menù a sinistra: selezionare
+        una voce per procedere oppure scegliere una delle opzioni di servizio presenti nella
+        sezione "<b>Opzioni Utente</b>".
+        <br />
+        <br />
+        <big><b><i>Supporto tecnico e informazioni</i></b></big>
+        <ul style="margin-top: 0px">
+            <li>1) Consultare la guida in linea accessibile tramite la voce "<b><i>Help</i></b>". </li>
+            <li>
+                2) La gestione dei profili utente e la raccolta di segnalazioni tecniche inerenti anomalie
+                o malfunzionamenti del sistema compete all'amministratore responsabile (evidenziato
+                sopra) del proprio gruppo di appartenenza.
+            </li>
+            <li>
+                3) Il servizio tecnico per ragioni pratiche e di sicurezza, fornisce
+                supporto diretto unicamente agli Amministratori dei gruppi e non ai singoli Utenti.
+            </li>
+        </ul>
+        <br />
+        <br />
+        <table style="height: 100%" cellpadding="0" width="100%" border="0">
+            <tr>
+                <td valign="top" align="left">
+                    <p align="justify">
+                        <b><i>Dati riepilogativi del profilo utente:</i></b><br />
+                        User:<b><i>@this.User.Identity.Name</i></b><br />
+                        Email:<b><i></i></b><br />
+                        Nome Cognome:<b><i></i></b><br />
+                    </p>
+                    <div class="loginpanel" style="padding-right: 5px; margin-top: 20px; padding-left: 5px;
+                                margin-bottom: 5px; padding-bottom: 5px; padding-top: 5px">
+                        <label></label>
+                    </div>
+                    <br />
+                    <br />
+                    <big><b><i>Supporto tecnico e informazioni</i></b></big>
+                    <ul style="margin-top: 0px">
+                        <li>1) Consultare la guida in linea accessibile tramite la voce "<b><i>Opzioni Utente</i></b>". </li>
+                        <li>
+                            2) La gestione dei profili utente e la raccolta di segnalazioni tecniche inerenti anomalie
+                            o malfunzionamenti del sistema può essere fatta telefonando il numero unico 06/54905556 la richiesta
+                            verrà inoltrata al primo operatore disponibile.
+                        </li>
+                        <li>
+                            3) Per questioni di carattere tecnico-amministrativo contattare:
+                        </li>
+                    </ul>
+                    <br />
+                    <p align="center">
+                        <b><i>Terminato il lavoro ricordati di effettuare il logoff !</i></b>
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</md-content>

@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title Governement History </title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")    
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/App")   
+</head>
+<body ng-app="GovApp" layout="row">
+    <div flex="30" layout="column" layout-padding>
+        <section flex="40">
+            @if (this.User.Identity.IsAuthenticated)
+            {
+
+            <div ng-app="GovApp" ng-controller="MenuController as menu">              
+                <nav>
+                    <md-toolbar>
+                        <div class="md-toolbar-tools">
+                            <h2>Menu</h2>
+                        </div>
+                    </md-toolbar>
+                </nav>               
+                    <ul class="collapsible popout" data-collapsible="accordion">
+                        <li>
+                            <div class="collapsible-header"><i class="mdi-image-filter-drama"></i><a href="~/Home/Index">Home</a></div>                          
+                        </li>
+                        <li>
+                            <div class="collapsible-header"><i class="mdi-maps-place"></i>Amministrazione</div>
+                            <div class="collapsible-body"><p><a href="~/Admin/Index">Indice</a></p></div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header"><i class="mdi-social-whatshot"></i>Gestisci</div>
+                            <div class="collapsible-body"><p><a href="~/Admin/Index">Indice</a></p></div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header"><i class="mdi-action-android"></i>Sample</div>
+                            <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header"><i class="mdi-action-bookmark"></i>Material</div>
+                            <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header"><i class="mdi-action-extension"></i>Style</div>
+                            <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+                        </li>
+                    </ul>
+            </div>
+            }
+        </section>
+        @*<section flex>
+            @if (this.User.Identity.IsAuthenticated)
+            {
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    Info
+                </div>
+            </md-toolbar>
+            @RenderSection("west", required: false)
+            }
+        </section>*@
+    </div>
+    <div flex layout="column" layout-padding>
+        <section flex="70">
+            @RenderBody()
+        </section>
+        <section flex="20">
+            @RenderSection("bottom", required: false)
+        </section>
+        <section flex>N.R. 2017 </section>
+    </div>  
+    @RenderSection("scripts", required: false)
+</body>
+</html>

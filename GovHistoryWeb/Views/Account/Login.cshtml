@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Autenticazione";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<md-content ng-controller="LoginController" layout="row" layout-align="space-around" layout-padding="layout-padding" ng-cloak="ng-cloak" class="login-form">
+    <md-card flex="flex" flex-gt-sm="50" flex-gt-md="33">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2><span>Autenticazione Utente</span></h2>
+            </div>
+        </md-toolbar>
+        <md-card-content>
+            <form name="loginform">             
+                <md-input-container class="md-block">
+                    <label>Utenza</label>
+                    <input type="text" id="Uname" ng-model="uName"
+                           ng-minlength="3"
+                           ng-maxlength="11" maxlength="11" required
+                           name="Username" style="width:200px" />
+                    <div id="mesUser" ng-messages="loginform.Username.$error" role="alert">
+                        <div ng-message-exp="required">UserName obbligatorio.</div>
+                        <div ng-message-exp="[minlength, maxlength, required]">
+                            UserName deve essere di almeno 3 caratteri e massimo 11
+                        </div>
+                    </div>
+                </md-input-container>
+             
+                <md-input-container class="md-block">
+                    <label>Password</label>
+                    <input type="password" id="Password" ng-model="password" name="Password"
+                           ng-minlength="8" maxlength="10"
+                           ng-maxlength="10" required
+                           tyle="width:200px" />
+                    <div ng-messages="loginform.Password.$error" role="alert">
+                        <div ng-message-exp="required">Password obbligatoria.</div>
+                        <div ng-message-exp="[minlength, maxlength,required]">
+                            Password deve essere di almeno 8 caratteri e massimo 10
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-button ng-click="LoginCheck($event)" class="md-raised md-primary">Accedi</md-button>
+                <md-button ng-click="clearFields()" class="md-raised md-primary">Cancella</md-button>
+            </form>
+            <div ng-if="status" id="status">
+                <b layout="row" layout-align="center center" class="md-padding">
+                    {{msg}}
+                </b>
+            </div>
+        </md-card-content>
+    </md-card>   
+</md-content>
+<div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px; top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001; opacity: .8; filter: alpha(opacity=70); display: none">
+    <p style="position: absolute; top: 30%; left: 45%; color: White;">
+        Attendere prego...<img src="~/Content/images/loader/loader.gif">
+    </p>
+</div>
+<div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
+    <md-button class="md-primary md-raised" id="ConfirmDialog" ng-click="showConfirm($event)">
+        Confirm Dialog
+    </md-button>
+</div>
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="myDialog">
+        <md-dialog layout-padding>
+        </md-dialog>
+    </div>
+</div>
+
+
