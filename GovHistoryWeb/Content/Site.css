@@ -4,3 +4,6 @@
 }
 
 
+md-checkbox.md-checked.red .md-icon {
+  background-color: rgba(255, 0, 0, 0.26);
+}

@@ -1,48 +1,132 @@
-﻿@model RBACv3.Models.ApplicationUser
-<div class="panel">
-    @using (Html.BeginForm("UserCreate", "Admin", FormMethod.Post))
-    {
-        @Html.ValidationSummary(true)
-        <fieldset>            
-            <legend><strong> Create User</strong></legend>
-            <br />
-            <table style='width: 100%'>
-                <tr>
-                    <td style='width: 10%; font-weight: bold' class='userTable'>
-                        @Html.LabelFor(model => model.UserName, "Username")
-                    </td>
-                    <td class='userTable'>
-                        @Html.TextBoxFor(model => model.UserName, new { style = "width:250px" })
-                        @Html.ValidationMessageFor(model => model.Username)
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style='width: 10%; font-weight: bold' class='userTable'>
-                        @Html.LabelFor(model => model.Firstname, "Firstname")
-                    </td>
-                    <td class='userTable'>
-                        @Html.TextBoxFor(model => model.Firstname, new { style = "width:250px" })
-                        @Html.ValidationMessageFor(model => model.Firstname)
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style='width: 10%; font-weight: bold' class='userTable'>
-                        @Html.LabelFor(model => model.Lastname, "Lastname")
-                    </td>
-                    <td class='userTable'>
-                        @Html.TextBoxFor(model => model.Lastname, new { style = "width:250px" })
-                        @Html.ValidationMessageFor(model => model.Lastname)
-                    </td>
-                </tr>
-                
-            </table>
-            <br />
-            <input class="btn btn-default" type="submit" value="Create" />
-        </fieldset>
-    }
+﻿@{
+    ViewBag.Title = "Creazione Utente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <h2>@ViewBag.Title</h2>
+    </div>
+</md-toolbar>
+<div ng-controller="UserController">
+    <md-content id="GeneralController">
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Ricerca Persona">
+                <form name="FormUser">
+                    <md-content class="md-padding">
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>User Name</label>
+                                <input ng-model="username"
+                                       name="username"
+                                       required  md-maxlength="16"  md-minlength="8"
+                                       minlength="8" maxlength="16">
+                                <div ng-messages="FormUser.username.$error" role="alert">
+                                    <div ng-message-exp="[required, minlength,md-maxlength, maxlength]">
+                                        UserName obbligatorio minimo 8 caratteri massimo 16 e solo alfanumerico
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Nome </label>
+                                <input ng-model="nome"
+                                       name="nome"
+                                       required>
+                                <div ng-messages="FormUser.nome.$error" role="alert">
+                                    <div ng-message-exp="[required]">
+                                        Nome obbligatorio solo alfanumerico
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Cognome </label>
+                                <input ng-model="cognome"
+                                       name="cognome"
+                                       required>
+                                <div ng-messages="FormUser.cognome.$error" role="alert">
+                                    <div ng-message-exp="[required]">
+                                        Cognome obbligatorio solo alfanumerico
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Password </label>
+                                <input ng-model="password" type="password"
+                                       name="password"
+                                       required>
+                                <div ng-messages="FormUser.password.$error" role="alert">
+                                    <div ng-message-exp="[required]">
+                                        Password obbligatoria
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Conferma Password </label>
+                                <input ng-model="confirmpassword"
+                                       name="confirmpassword" type="password"
+                                       compare-to="FormUser.password" 
+                                       required>
+                                <div ng-messages="FormUser.confirmpassword.$error" role="alert">
+                                    <div ng-message-exp="[required]">
+                                      Conferma password obbligatoria
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Email </label>
+                                <input ng-model="email"
+                                       name="email"
+                                       required>
+                                <div ng-messages="FormUser.email.$error" role="alert">
+                                    <div ng-message-exp="[required]">
+                                        Email obbligatoria solo alfanumerico
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Cellulare </label>
+                                <input ng-model="cellulare"
+                                       name="cellulare"
+                                       required>
+                                <div ng-messages="FormUser.cellulare.$error" role="alert">
+                                    <div ng-message-exp="[required]">
+                                        Cellulare obbligatorio solo numerico
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <md-button class="md-primary md-raised" ng-disabled="!FormUser.$valid" ng-click="CreateUser();">
+                            Crea
+                        </md-button>
+                    </md-content>
+                </form>
+            </md-tab>
+        </md-tabs>
+    </md-content>
 </div>
-<div>
-    @Html.ActionLink("Go to Users", "Index", "Admin")
+<div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px; top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001; opacity: .8; filter: alpha(opacity=70); display: none">
+    <p style="position: absolute; top: 30%; left: 45%; color: White;">
+        Attendere prego...<img src="~/Content/images/loader/loader.gif">
+    </p>
 </div>
+<div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
+    <md-button class="md-primary md-raised" id="ConfirmDialog" ng-click="showConfirm($event)">
+        Confirm Dialog
+    </md-button>
+</div>
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="myDialog">
+        <md-dialog layout-padding>
+        </md-dialog>
+    </div>
+</div>
+

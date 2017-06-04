@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Security;
 
 namespace GovHistoryRepository.Identity
 {
@@ -36,7 +38,15 @@ namespace GovHistoryRepository.Identity
             return _retVal;
         }
 
-        public bool IsSysAdmin { get { return this.Role.IsSysAdmin; } }
+        public bool IsSysAdmin
+        {
+            get
+            {
+                if (this.Role != null)
+                { return this.Role.IsSysAdmin; }
+                else { return false; }
+            }
+        }
     }
 
     public class ApplicationUser : IdentityUser<int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
@@ -158,6 +168,7 @@ namespace GovHistoryRepository.Identity
         public GovHistoryDbContext() : base("GovHistoryConnection")
         {
             Database.SetInitializer<GovHistoryDbContext>(new GovHistoryDatabaseInitializer());
+            base.Configuration.ProxyCreationEnabled = false;
 
         }
 

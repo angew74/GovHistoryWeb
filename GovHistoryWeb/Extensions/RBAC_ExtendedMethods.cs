@@ -1,4 +1,5 @@
 ﻿using GovHistoryRepository.Identity;
+using GovHistoryWeb.Controllers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -7,10 +8,11 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
-
-    public enum RBACStatus
+public enum RBACStatus
     {
         Success = 0,
         LockedOut = 1,
@@ -51,7 +53,7 @@ using System.Web.Mvc;
         public static string cKey_PasswordRequireUppercase = "PasswordRequireUppercase";
 
         #region Registration
-        private static int RegisterUser(this ControllerBase controller, RegisterViewModel model, ApplicationUserManager userMngr, out List<string> _errors)
+        private static int RegisterUser(RegisterViewModel model, ApplicationUserManager userMngr, out List<string> _errors)
         {
             int _retVal = -1;
             _errors = new List<string>();
@@ -80,13 +82,13 @@ using System.Web.Mvc;
             return _retVal;
         }
 
-        public static RBACStatus Register(this ControllerBase controller, RegisterViewModel model, ApplicationUserManager userMngr, ApplicationSignInManager signInMngr, out List<string> _errors)
+        public static RBACStatus Register(RegisterViewModel model, ApplicationUserManager userMngr, ApplicationSignInManager signInMngr, out List<string> _errors)
         {
             RBACStatus _retVal = RBACStatus.Failure;
             try
             {
                 //Logic driven by settings defined in the application’s configuration file...
-                int _userId = RBAC_ExtendedMethods.RegisterUser(controller, model, userMngr, out _errors);
+                int _userId = RBAC_ExtendedMethods.RegisterUser(model, userMngr, out _errors);
                 if (_userId > -1)
                 {
                     model.Id = _userId;
@@ -102,7 +104,7 @@ using System.Web.Mvc;
                         {
                             //Generate Email Confirmation Token                      
                             _retVal = RBACStatus.Failure;
-                            if (SendOTP2Email(controller, userMngr, _userId, model.Email))
+                            if (SendOTP2Email(userMngr, _userId, model.Email))
                                 _retVal = RBACStatus.RequiresAccountActivation;
 
                             return _retVal;
@@ -111,7 +113,7 @@ using System.Web.Mvc;
                         else if ((IsAccountVerificationRequired && DeviceType == c_PhoneCode) || (Is2FAEnabled && DeviceType == c_PhoneCode))
                         {
                             _retVal = RBACStatus.Failure;
-                            if (SendOTP2Phone(controller, userMngr, _userId, model.Mobile))
+                            if (SendOTP2Phone(userMngr, _userId, model.Mobile))
                                 _retVal = RBACStatus.PhoneVerification;
 
                             return _retVal;
@@ -254,7 +256,7 @@ using System.Web.Mvc;
             return _retVal;
         }
 
-        public static bool SendOTP2Phone(this ControllerBase controller, ApplicationUserManager _userMngr, int _userId, string _phoneNumber)
+        public static bool SendOTP2Phone(ApplicationUserManager _userMngr, int _userId, string _phoneNumber)
         {
             bool _retVal = false;
 
@@ -282,7 +284,7 @@ using System.Web.Mvc;
             return _retVal;
         }
 
-        public static bool SendOTP2Email(this ControllerBase controller, ApplicationUserManager _userMngr, int _userId, string _email)
+        public static bool SendOTP2Email(ApplicationUserManager _userMngr, int _userId, string _email)
         {
             bool _retVal = false;
 
@@ -293,8 +295,8 @@ using System.Web.Mvc;
             {
                 //Generate security code for email confirmation
                 string _code = _userMngr.GenerateEmailConfirmationToken(_userId);
-
-                var callbackUrl = new UrlHelper(controller.ControllerContext.RequestContext).Action("ConfirmEmail", "Account", new { userId = _userId, code = _code }, protocol: controller.ControllerContext.RequestContext.HttpContext.Request.Url.Scheme);
+                HttpContextWrapper httpContextWrapper = new HttpContextWrapper(System.Web.HttpContext.Current);
+                var callbackUrl = new UrlHelper(new RequestContext(httpContextWrapper, RouteTable.Routes.GetRouteData(httpContextWrapper)));
                 var message = new IdentityMessage { Subject = "Time-based One-Time Password (TOTP) Account Verification", Destination = _email, Body = string.Format("Please <a href='{0}'>verify</a> your account before attempting to log in to the system.", callbackUrl) };
 
                 //Email the security code  

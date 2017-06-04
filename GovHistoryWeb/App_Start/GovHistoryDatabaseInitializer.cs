@@ -32,7 +32,7 @@ namespace GovHistoryRepository
             var user = new ApplicationUser { UserName = "Admin", Email = "agnew74@gmail.com", Firstname = "System", Lastname = "Administrator", LastModified = DateTime.Now, Inactive = false, EmailConfirmed = true };
 
             ApplicationUserManager UserManager = new ApplicationUserManager(new ApplicationUserStore(context));
-            var result = UserManager.Create(user, "roberta4@");
+            var result = UserManager.Create(user, "Roberta4@");
 
             if (result.Succeeded)
             {
@@ -43,7 +43,7 @@ namespace GovHistoryRepository
 
             //Create Default User...
             user = new ApplicationUser { UserName = "User", Email = "agnew74@gmail.com", Firstname = "Default", Lastname = "User", LastModified = DateTime.Now, Inactive = false, EmailConfirmed = true };
-            result = UserManager.Create(user, "roberta4@");
+            result = UserManager.Create(user, "Roberta4@");
 
             if (result.Succeeded)
             {
@@ -53,8 +53,12 @@ namespace GovHistoryRepository
 
             //Create User with NO Roles...
             user = new ApplicationUser { UserName = "Guest", Email = "agnew74@gmail.com", Firstname = "Guest", Lastname = "User", LastModified = DateTime.Now, Inactive = false, EmailConfirmed = true };
-            result = UserManager.Create(user, "roberta4@");
-
+            result = UserManager.Create(user, "Roberta4@");
+            if (result.Succeeded)
+            {
+                //Add User to Admin Role...
+                UserManager.AddToRole(user.Id, c_DefaultUser);
+            }
 
             base.Seed(context);
 

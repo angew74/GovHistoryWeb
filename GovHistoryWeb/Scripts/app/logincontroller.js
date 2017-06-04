@@ -11,6 +11,7 @@
         $("#divLoading").show();
         $scope.event = $event;
         var getData = LoginService.UserLogin(User);
+        $scope.msg = "";
         getData.then(function (msg) {
             if (msg.data.success == "false") {
                 $("#divLoading").hide();

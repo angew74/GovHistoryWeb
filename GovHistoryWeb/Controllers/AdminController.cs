@@ -13,5 +13,16 @@ namespace GovHistoryWeb.Controllers
         {
             return View();
         }
+        // GET: Admin
+        public ActionResult UserCreate()
+        {
+            return View();
+        }
+
+        // GET: Admin
+        public ActionResult UserDetails()
+        {
+            return View();
+        }
     }
 }

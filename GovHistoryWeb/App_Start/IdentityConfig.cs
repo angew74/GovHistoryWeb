@@ -250,6 +250,24 @@ namespace GovHistoryRepository.Identity
             return _retVal;
         }
 
+        public static List<ApplicationUser> GetUsers(int start, int limit)
+        {
+            List<ApplicationUser> _retVal = null;
+            try
+            {
+                using (GovHistoryDbContext db = new GovHistoryDbContext())
+                {
+                    _retVal = db.Users.OrderBy(r => r.Lastname).ThenBy(r => r.Firstname).Skip(start).Take(limit).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return _retVal;
+        }
+
         public static List<ApplicationUser> GetUsers4Surname(string _surname)
         {
             List<ApplicationUser> _retVal = null;

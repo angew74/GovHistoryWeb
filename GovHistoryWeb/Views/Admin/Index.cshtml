@@ -1,16 +1,124 @@
-﻿@model IEnumerable<RBACv3.Models.ApplicationUser>
-@{
-    ViewBag.Title = "RBAC Administration";
+﻿@{
+    ViewBag.Title = "Elenco Utenti";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-<h3 style="font-weight:bold; font-size:x-large">
-    System Users
-</h3>
-
-@Html.Partial("_ListUserTable", Model)
-<br />
-<div>
-    <input class="btn btn-default" type="button" value="Create User" onclick="location.href='@Url.Action("UserCreate", "Admin")'" />
-    <br />
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <h2>@ViewBag.Title</h2>
+    </div>
+</md-toolbar>
+<div ng-controller="UserController">
+    <md-content id="GeneralController">
+        <div id="ListaUtenti">
+            <md-content layout-padding id="ListaUtentiContent">
+                <md-table-container>
+                    <table id="Utenti" md-table ng-model="selected" md-progress="promise">
+                        <thead md-head md-order="query.order" md-on-reorder="getUtenti">
+                            <tr md-row>
+                                <th>UserName</th>
+                                <th>Inattivo</th>
+                                <th>Nome</th>
+                                <th>Cognome</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th>Modifica</th>
+                                <th>Elimina</th>
+                                <th>Ruoli</th>
+                            </tr>
+                        </thead>
+                        <tbody style="text-align:center">
+                            <tr md-row md-select="tile" md-select-id="UserName" md-auto-select ng-repeat="tap in getUtenti.ListUtenti">
+                                <td>{{tap.UserName}}</td>
+                                <td>
+                                    <md-checkbox ng-model="tap.Inactive" class="red" ng-init="tap.Inactive=true" name="inactiv" ng-checked="tap.Inactive"                                               
+                                                 aria-label="Inattivo">
+                                    </md-checkbox>
+                                </td>
+                                <td>{{tap.Firstname}}</td>
+                                <td>{{tap.Lastname}}</td>
+                                <td>
+                                    <md-button class="md-icon-button" aria-label="Email" ng-click="showOTP(tap.Email)">
+                                        <md-tooltip>mostra email</md-tooltip>
+                                        <md-icon md-svg-icon="../Content/images/svg/ic_email_black_24px.svg"></md-icon>
+                                    </md-button>
+                                </td>
+                                <td>
+                                    <md-button class="md-icon-button" aria-label="Mobile" ng-click="showOTP(tap.Mobile)">
+                                        <md-tooltip>mostra mobile</md-tooltip>
+                                        <md-icon md-svg-icon="../Content/images/svg/ic_phonelink_ring_black_24px.svg"></md-icon>
+                                    </md-button>
+                                </td>
+                                <td>
+                                    <md-button class="md-icon-button" aria-label="Modifica Utente" ng-click="editUser(tap.Id)">
+                                        <md-tooltip>modifica utente</md-tooltip>
+                                        <md-icon md-svg-icon="../Content/images/svg/ic_mode_edit_black_24px.svg"></md-icon>
+                                    </md-button>
+                                </td>
+                                <td>
+                                    <md-button class="md-icon-button" aria-label="Elimina Utente" ng-click="deleteUser(tap.Email)">
+                                        <md-tooltip>cancella utente</md-tooltip>
+                                        <md-icon md-svg-icon="../Content/images/svg/ic_delete_sweep_black_24px.svg"></md-icon>
+                                    </md-button>
+                                </td>
+                                <td>
+                                    <md-button class="md-icon-button" aria-label="Dettagli" ng-click="showRoles(tap.Id)">
+                                        <md-tooltip>mostra ruoli utente</md-tooltip>
+                                        <md-icon md-svg-icon="../Content/images/svg/ic_perm_identity_black_24px.svg"></md-icon>
+                                    </md-button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+                <md-table-pagination md-limit="query.limit" md-label="{page: 'Pagina:', rowsPerPage: 'Righe per pagina:', of: 'di'}" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{getUtenti.Totale}}" md-on-paginate="getUtenti" md-page-select></md-table-pagination>
+            </md-content>
+        </div>
+    </md-content>
+    <md-content id="GeneralController">
+        <div id="ListaRuoli" style="display:none">
+            <md-content layout-padding id="ListaRuoliContent">
+                <md-table-container>
+                    <table id="Ruoli" md-table ng-model="selected" md-progress="promise">
+                        <thead md-head md-order="query.order" md-on-reorder="getRuoli">
+                            <tr md-row>
+                                <th>Nome</th>
+                                <th><span>Descrizione</span></th>
+                                <th>SysAdmin</th>
+                                <th>Dettagli</th>
+                                <th>Rimuovi</th>
+                            </tr>
+                        </thead>
+                        <tbody style="text-align:center">
+                            <tr md-row md-select="tile" md-select-id="IdEvento" md-auto-select ng-repeat="tap in getRuoli.ListRuoli">
+                                <td>{{tap.Name}}</td>
+                                <td>{{tap.Description}}</td>
+                                <td>
+                                    <md-checkbox ng-model="tap.IsSysAdmin" ng-checked="tap.IsSysAdmin"
+                                                 aria-label="Sys Admin">
+                                    </md-checkbox>
+                                </td>
+                                <td>
+                                    <md-button class="md-icon-button" aria-label="Dettagli Ruolo" ng-click="showRoleDetails(tap.Id)">
+                                        <md-tooltip>Dettagli Ruolo</md-tooltip>
+                                        <md-icon md-svg-icon="../Content/images/svg/ic_people_black_24px.svg"></md-icon>
+                                    </md-button>
+                                </td>
+                                <td>
+                                    <md-button class="md-icon-button" aria-label="Elimina Utente da ruolo" ng-click="deleteUserFromRole(tap.UserId,tap.Id)">
+                                        <md-tooltip>Elimina utente ruolo</md-tooltip>
+                                        <md-icon md-svg-icon="../Content/images/svg/ic_delete_sweep_black_24px.svg"></md-icon>
+                                    </md-button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <md-table-pagination md-limit="query.limit" md-label="{page: 'Pagina:', rowsPerPage: 'Righe per pagina:', of: 'di'}" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{getRuoli.Totale}}" md-on-paginate="getRuoli" md-page-select></md-table-pagination>
+                </md-table-container>
+            </md-content>
+        </div>
+    </md-content>
 </div>
+
+

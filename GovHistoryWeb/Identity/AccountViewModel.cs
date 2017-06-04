@@ -74,8 +74,10 @@ namespace GovHistoryRepository.Identity
 
     public class RegisterViewModel
     {
+        internal string returnUrl;
+
         [Required]
-        [StringLength(15, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(15, ErrorMessage = "Il campo {0} deve essere almeno di {2} caratteri.", MinimumLength = 8)]
         [Display(Name = "UserName")]
         public string UserName { get; set; }
 
@@ -87,29 +89,33 @@ namespace GovHistoryRepository.Identity
         public string Email { get; set; }
 
         [Required]
-        [StringLength(30, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
+        [StringLength(30, ErrorMessage = "Il campo {0} deve essere almeno di {2} caratteri.", MinimumLength = 2)]
         [Display(Name = "First name")]
         public string Firstname { get; set; }
 
         [Required]
-        [StringLength(30, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
+        [StringLength(30, ErrorMessage = "Il campo {0} deve essere almeno di {2} caratteri.", MinimumLength = 2)]
         [Display(Name = "Last name")]
         public string Lastname { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Il campo {0} deve essere almeno di {2} caratteri.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [System.Web.Mvc.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.Web.Mvc.Compare("Password", ErrorMessage = "La password e la conferma password non coincide.")]
         public string ConfirmPassword { get; set; }
 
-        [StringLength(30, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 11)]
+        [StringLength(30, ErrorMessage = "Il campo {0} deve essere almeno di {2} caratteri.", MinimumLength = 11)]
         [Display(Name = "Mobile")]
         public string Mobile { get; set; }
+
+        public string success { get; set; }
+        public string message { get; set; }
+
     }
 
     public class ResetPasswordViewModel
@@ -120,14 +126,14 @@ namespace GovHistoryRepository.Identity
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Il campo {0} deve essere almeno di {2} caratteri.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [System.Web.Mvc.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.Web.Mvc.Compare("Password", ErrorMessage = "La password e la conferma password non coincide.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -168,7 +174,7 @@ namespace GovHistoryRepository.Identity
         public int Id { get; set; }
 
         [Required]
-        [StringLength(15, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(15, ErrorMessage = "Il campo {0} deve essere almeno di {2} caratteri.", MinimumLength = 8)]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
@@ -178,12 +184,12 @@ namespace GovHistoryRepository.Identity
         public string Email { get; set; }
 
         [Required]
-        [StringLength(30, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
+        [StringLength(30, ErrorMessage = "Il campo {0} deve essere almeno di {2} caratteri.", MinimumLength = 2)]
         [Display(Name = "First name")]
         public string Firstname { get; set; }
 
         [Required]
-        [StringLength(30, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
+        [StringLength(30, ErrorMessage = "Il campo {0} deve essere almeno di {2} caratteri.", MinimumLength = 2)]
         [Display(Name = "Last name")]
         public string Lastname { get; set; }
 

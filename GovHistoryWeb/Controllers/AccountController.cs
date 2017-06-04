@@ -13,7 +13,7 @@ using System.Web.Mvc;
 
 namespace GovHistoryWeb.Controllers
 {
-        [System.Web.Mvc.Authorize]
+        [System.Web.Mvc.AllowAnonymous]
         public class AccountController : Controller
         {
             private ApplicationSignInManager _signInManager;
@@ -91,7 +91,7 @@ namespace GovHistoryWeb.Controllers
                                 var user = UserManager.FindByName(model.UserName);
                                 if (user != null)
                                 {
-                                    if (this.SendOTP2Phone(this.UserManager, user.Id, user.PhoneNumber))
+                                    if (RBAC_ExtendedMethods.SendOTP2Phone(this.UserManager, user.Id, user.PhoneNumber))
                                     {
                                         model.ResponseUrl = "";
                                         model.success = "false";
@@ -102,7 +102,7 @@ namespace GovHistoryWeb.Controllers
                                 break;
                             }
                         case RBACStatus.RequiresVerification:
-                            model.ResponseUrl = returnUrl;
+                            model.ResponseUrl = "SendSecurityCode";
                             model.success = "false";                          
                             break;
                             // return RedirectToAction("SendSecurityCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
@@ -133,9 +133,6 @@ namespace GovHistoryWeb.Controllers
             // If we reach this point, something failed, redisplay form displaying error message(s)...
             return Json(model,JsonRequestBehavior.AllowGet);
         }
-
-
-
 
         #endregion
 
@@ -207,12 +204,6 @@ namespace GovHistoryWeb.Controllers
                 AddErrors(new IdentityResult(_errors));
                 return View(model);
             }
-
-
-
-
-
-
 
             [AllowAnonymous]
             public ActionResult RequestEmailVerification(string Username)
@@ -351,59 +342,7 @@ namespace GovHistoryWeb.Controllers
             public ActionResult Register()
             {
                 return View();
-            }
-
-            [HttpPost]
-            [AllowAnonymous]
-            [ValidateAntiForgeryToken]
-            public async Task<ActionResult> Register(RegisterViewModel model)
-            {
-                if (ModelState.IsValid)
-                {
-                    List<string> _errors = new List<string>();
-                    try
-                    {
-                        RBACStatus _retVal = this.Register(model, this.UserManager, this.SignInManager, out _errors);
-                        switch (_retVal)
-                        {
-                            case RBACStatus.Success:
-                                {
-                                    ViewBag.Message = "Your account has been created successfully.  You can now continue and login...";
-                                    return View("Confirmation");
-                                }
-                            case RBACStatus.RequiresAccountActivation:
-                                {
-                                    ViewBag.Username = model.UserName;
-                                    ViewBag.Email = model.Email;
-                                    return View("ConfirmEmailSent");
-                                }
-                            case RBACStatus.EmailVerification:
-                                {
-                                    return RedirectToAction("RequestEmailVerification", new { Username = model.UserName });
-                                    //return RedirectToAction("TOTPEmailVerification4Registration", new { UserId = model.Id, email = model.Email });   
-
-                                }
-                            case RBACStatus.PhoneVerification:
-                                {
-                                    return RedirectToAction("OTP4PhoneVerification", new { UserId = model.Id, phoneNumber = model.Mobile });
-                                }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        AddErrors(new IdentityResult(ex.Message));
-                    }
-
-                    if (_errors.Count() > 0)
-                    {
-                        AddErrors(new IdentityResult(_errors));
-                    }
-                }
-
-                //If we got this far, something failed, redisplay form
-                //Errors will be displayed back to the user because we have set the ModelState object with our _errors list...
-                return View(model);
-            }
+            }           
 
             #endregion
 
