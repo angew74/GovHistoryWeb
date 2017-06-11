@@ -28,14 +28,14 @@ public enum RBACStatus
 
     public static class RBAC_ExtendedMethods
     {
-        public static string c_AccountLockout = "Your account has been locked out for {0} minutes due to multiple failed login attempts";
+        public static string c_AccountLockout = "Il tuo account è stato bloccato per {0} minuti a causa di molteplici tentativi falliti di accesso";
         //public static string c_InvalidCredentials = "Invalid credentials. You have {0} more attempt(s) before your account gets locked out";
-        public static string c_InvalidCredentials = "The password entered is incorrect. Be sure you're using the correct password for this account. You have {0} more attempt(s) before your account gets locked out";
-        public static string c_InvalidLogin = "Invalid login attempt";
-        public static string c_InvalidUser = "This account doesn't exist. Enter a different account or create a new one...";
-        public static string c_AccountEmailUnconfirmed = "You must verify your account using the e-mail sent during the account registration process before being allowed to continue...";
-        public static string c_AccountPhoneNumberUnconfirmed = "You must verify your account using the security code sent to the mobile number specified during the account registration process before being allowed to continue.  A new security code has been sent to the mobile number {0}.  Enter the security code sent to your mobile number into the input field below and click 'Verify My Identity' to verify your identity...";
-        public static string c_AccountUnverified = "You have not verified your identify during the registration process.  Please request for a new security code to be sent...";
+        public static string c_InvalidCredentials = "La password inserita non è corretta. Restano ancora {0} tentativi prima che l'account sia bloccato";
+        public static string c_InvalidLogin = "Accesso non riuscito";
+        public static string c_InvalidUser = "L'account non esite. Inserisci credenziali differenti o creane uno nuovo.";
+        public static string c_AccountEmailUnconfirmed = "E' necessario verificare l'account rispondendo all'email di attivazione prima di poter continuare...";
+        public static string c_AccountPhoneNumberUnconfirmed = "E'necessario verificare l'account usando il codice di sicurezza inviato al numero di cellulare durante la procedura di registrazione, prima di poter continuare.  Un codice di sicurezza è stata spedito al seguente numero {0}.  Inserisci il codice di sicurezza nel campo che si trova sotto e spingi il tasto 'Verificia la mia identità' per completare la procedura di sicurezza...";
+        public static string c_AccountUnverified = "Non è stata verificata l'identità durante la procedura di registrazione. Per favore chiedi un nuovo codice di sicurezza...";
 
         public static string c_EmailCode = "Email Code";
         public static string c_PhoneCode = "Phone Code";

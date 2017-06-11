@@ -1,49 +1,75 @@
-﻿@model GovHistoryRepository.Identity.ApplicationRole
-@{
-    ViewBag.Title = "Create Role";
+﻿@{
+    ViewBag.Title = "Creazione Ruolo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="panel">
-    @using (Html.BeginForm())
-    {
-        @Html.ValidationSummary(true)    
-        <fieldset>
-            <legend>
-                <h3 style="font-weight:bold; font-size:x-large">
-                    Create Role
-                </h3>
-            </legend>
-            <table style='width: 100%'>
-                <tr>
-                    <td style='width: 10%; font-weight: bold' class='userTable'>
-                        @Html.LabelFor(model => model.Name)
-                    </td>
-                    <td style='width: 28%' class='userTable'>
-                        @Html.TextBoxFor(model => model.Name, new { style = "width:450px" })
-                        @Html.ValidationMessageFor(model => model.Name)
-                    </td>
-                    <td style='width: 8%; font-weight: bold' class='userTable'>
-                        @Html.LabelFor(model => model.IsSysAdmin, "System Role")
-                    <td style='width: 20%' class='userTable'>
-                        @Html.EditorFor(model => model.IsSysAdmin)
-                        @Html.ValidationMessageFor(model => model.IsSysAdmin)
-                    </td>
-                </tr>           
-                <tr>
-                    <td style='width: 10%; font-weight: bold' class='userTable'>
-                        @Html.LabelFor(model => model.RoleDescription)
-                    </td>
-                    <td style='width: 28%' class='userTable'>
-                        @Html.TextBoxFor(model => model.RoleDescription, new { style = "width:450px" })
-                        @Html.ValidationMessageFor(model => model.RoleDescription)
-                    </td>                    
-                </tr>        
-            </table>
-            <br />
-            <input class="btn btn-default" type="submit" value="Create Role" />
-        </fieldset>
-    }
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <h2>@ViewBag.Title</h2>
+    </div>
+</md-toolbar>
+<div ng-controller="RoleController">
+    <md-content id="GeneralController">
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Dati Ruolo">
+                <form name="FormRole">
+                    <md-content class="md-padding">
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Nome Ruolo</label>
+                                <input ng-model="name"
+                                       name="name"
+                                       required md-maxlength="16" md-minlength="4"
+                                       minlength="4" maxlength="16">
+                                <div ng-messages="FormRole.name.$error" role="alert">
+                                    <div ng-message-exp="[required, minlength,md-maxlength, maxlength]">
+                                        Nome obbligatorio minimo 4 caratteri massimo 16 e solo alfanumerico
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Descrizione </label>
+                                <input ng-model="roledescription"
+                                       name="roledescription"
+                                       required>
+                                <div ng-messages="FormRole.roledescription.$error" role="alert">
+                                    <div ng-message-exp="[required]">
+                                        Descrizione ruolo obbligatoria solo alfanumerico
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label> </label>
+                                <md-checkbox ng-model="issysadmin"  name="issysadmin" aria-label="Ruolo di Sistema">
+                                    Ruolo di Sistema:
+                                </md-checkbox>  
+                            </md-input-container>
+                        </div>                      
+                        <md-button class="md-primary md-raised" ng-disabled="!FormRole.$valid" ng-click="CreateRole();">
+                            Crea
+                        </md-button>
+                    </md-content>
+                </form>
+            </md-tab>
+        </md-tabs>
+    </md-content>
 </div>
-<div>
-    @Html.ActionLink("Go to Roles", "RoleIndex", "Admin")
+<div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px; top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001; opacity: .8; filter: alpha(opacity=70); display: none">
+    <p style="position: absolute; top: 30%; left: 45%; color: White;">
+        Attendere prego...<img src="~/Content/images/loader/loader.gif">
+    </p>
+</div>
+<div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
+    <md-button class="md-primary md-raised" id="ConfirmDialog" ng-click="showConfirm($event)">
+        Confirm Dialog
+    </md-button>
+</div>
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="myDialog">
+        <md-dialog layout-padding>
+        </md-dialog>
+    </div>
 </div>

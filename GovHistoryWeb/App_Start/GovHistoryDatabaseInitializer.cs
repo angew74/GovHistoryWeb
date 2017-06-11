@@ -13,14 +13,14 @@ namespace GovHistoryRepository
     public class GovHistoryDatabaseInitializer : CreateDatabaseIfNotExists<GovHistoryDbContext>
     {
         private readonly string c_SysAdmin = "System Administrator";
-        private readonly string c_DefaultUser = "Default User";
+        private readonly string c_DefaultUser = "Utente Standard";
 
         protected override void Seed(GovHistoryDbContext context)
         {
             //Create Default Roles...
             IList<ApplicationRole> defaultRoles = new List<ApplicationRole>();
-            defaultRoles.Add(new ApplicationRole { Name = c_SysAdmin, RoleDescription = "Allows system administration of Users/Roles/Permissions", LastModified = DateTime.Now, IsSysAdmin = true });
-            defaultRoles.Add(new ApplicationRole { Name = c_DefaultUser, RoleDescription = "Default role with limited permissions", LastModified = DateTime.Now, IsSysAdmin = false });
+            defaultRoles.Add(new ApplicationRole { Name = c_SysAdmin, RoleDescription = "Amministratore di sistema di Utenti/Ruoli/Permessi", LastModified = DateTime.Now, IsSysAdmin = true });
+            defaultRoles.Add(new ApplicationRole { Name = c_DefaultUser, RoleDescription = "Ruolo di default con permessi limitati", LastModified = DateTime.Now, IsSysAdmin = false });
 
             ApplicationRoleManager RoleManager = new ApplicationRoleManager(new ApplicationRoleStore(context));
             foreach (ApplicationRole role in defaultRoles)
@@ -29,7 +29,7 @@ namespace GovHistoryRepository
             }
 
             //Create User...
-            var user = new ApplicationUser { UserName = "Admin", Email = "agnew74@gmail.com", Firstname = "System", Lastname = "Administrator", LastModified = DateTime.Now, Inactive = false, EmailConfirmed = true };
+            var user = new ApplicationUser { UserName = "Administrator", Email = "agnew74@gmail.com", Firstname = "System", Lastname = "Administrator", LastModified = DateTime.Now, Inactive = false, EmailConfirmed = true };
 
             ApplicationUserManager UserManager = new ApplicationUserManager(new ApplicationUserStore(context));
             var result = UserManager.Create(user, "Roberta4@");
@@ -42,7 +42,7 @@ namespace GovHistoryRepository
 
 
             //Create Default User...
-            user = new ApplicationUser { UserName = "User", Email = "agnew74@gmail.com", Firstname = "Default", Lastname = "User", LastModified = DateTime.Now, Inactive = false, EmailConfirmed = true };
+            user = new ApplicationUser { UserName = "Utente", Email = "agnew74@gmail.com", Firstname = "Default", Lastname = "User", LastModified = DateTime.Now, Inactive = false, EmailConfirmed = true };
             result = UserManager.Create(user, "Roberta4@");
 
             if (result.Succeeded)
@@ -52,7 +52,7 @@ namespace GovHistoryRepository
             }
 
             //Create User with NO Roles...
-            user = new ApplicationUser { UserName = "Guest", Email = "agnew74@gmail.com", Firstname = "Guest", Lastname = "User", LastModified = DateTime.Now, Inactive = false, EmailConfirmed = true };
+            user = new ApplicationUser { UserName = "Ospite", Email = "agnew74@gmail.com", Firstname = "Guest", Lastname = "User", LastModified = DateTime.Now, Inactive = false, EmailConfirmed = true };
             result = UserManager.Create(user, "Roberta4@");
             if (result.Succeeded)
             {

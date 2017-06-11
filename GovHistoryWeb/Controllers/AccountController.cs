@@ -118,8 +118,7 @@ namespace GovHistoryWeb.Controllers
 
                 if (_errors.Count() > 0)
                 {
-                    //AddErrors(new IdentityResult(_errors));
-                    model.ResponseUrl = "";
+                    //AddErrors(new IdentityResult(_errors));  
                     model.success = "false";
                     model.message = new IdentityResult(_errors).Errors.ToList();
                 }

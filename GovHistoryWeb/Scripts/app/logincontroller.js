@@ -16,6 +16,10 @@
             if (msg.data.success == "false") {
                 $("#divLoading").hide();
                 //  $("#ConfirmDialog").modal('show');
+                if (msg.data.ResponseUrl != null)
+                {
+                    window.location.href = 'GovHistoryWeb/Account/' + msg.data.ResponseUrl;
+                }
                 if (msg.data.message == null) {
                     $scope.msg = "Errore nell'autenticazione contattare servizio tecnico";
                 }

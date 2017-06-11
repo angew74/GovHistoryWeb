@@ -1,68 +1,55 @@
-﻿@model RBACv3.Models.ApplicationRole
+﻿@model  GovHistoryRepository.Identity.ApplicationRole
 @{
     ViewBag.Title = "Role: " + Html.DisplayFor(model => model.RoleDescription);
 }
 
 @{if (Model != null)
-{
-    <div class="row">
-        <div class="panel">
-            <fieldset>
-                <legend>
-                    <h3 style="font-weight:bold; font-size:x-large">
-                        Role Details
-                    </h3>
-                </legend>
-                <div>
-                    <table style='width: 100%'>
-                        <tr>
-                            <td style='width: 120px;font-weight: bold' class='userTable'>
-                                @Html.LabelFor(model => model.Name)
-                            </td>
-                            <td class='userTable'>
-                                @Html.DisplayFor(model => model.Name, new { style = "width:350px" })
-                                @Html.ValidationMessageFor(model => model.Name)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style='font-weight: bold' class='userTable'>
-                                @Html.LabelFor(model => model.RoleDescription)
-                            </td>
-                            <td class='userTable'>
-                                @Html.DisplayFor(model => model.RoleDescription, new { style = "width:90%" })
-                                @Html.ValidationMessageFor(model => model.RoleDescription)
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td style='width: 100px; font-weight: bold' class='userTable'>
-                                @Html.LabelFor(model => model.IsSysAdmin, "System Role")
-                            </td>
-                            <td class='userTable'>
-                                @Html.DisplayFor(model => model.IsSysAdmin)
-                                @Html.ValidationMessageFor(model => model.IsSysAdmin)
-                            </td>
-                        </tr>
-                    </table>
-                    <br />
-                    <input class="btn btn-default" type="button" value="Edit" onclick="location.href='@Url.Action("RoleEdit", "Admin", new { id = Model.Id })'" />
-            </fieldset>
-            <div>
-                <fieldset>
-                    <legend>
-                        <h3>
-                            Permissions Associated with this Role
-                        </h3>
-                    </legend>
-
-                    <div id="PermissionsTable">
-                        @Html.Partial("_ListPermissions", Model)
-                    </div>
-                </fieldset>
+    {
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>@ViewBag.Title</h2>
             </div>
+        </md-toolbar>
+        <div ng-controller="RoleController">
+            <md-content id="GeneralController" layout-gt-sm="row" layout-padding>
+                <div layout-gt-xs="row">
+                    <md-input-container>
+                        <label>@Html.LabelFor(model => model.Name)</label>
+                        @Html.DisplayFor(model => model.Name, new { style = "width:350px" })
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row">
+                    <md-input-container>
+                        <label>@Html.LabelFor(model => model.RoleDescription)</label>
+                        @Html.DisplayFor(model => model.RoleDescription, new { style = "width:90%" })
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row">
+                    <md-input-container>
+                        <label>
+                            @Html.LabelFor(model => model.IsSysAdmin, "System Role")
+                        </label>
+                        @Html.DisplayFor(model => model.IsSysAdmin)
+                    </md-input-container>
+                    <md-input-container>
+                        <md-button class="md-icon-button" onclick="location.href='@Url.Action("RoleEdit", "Admin", new { id = Model.Id })'" aria-label="Modifica">
+                            <md-tooltip>modifica dettagli</md-tooltip>
+                            <md-icon md-svg-icon="../Content/images/svg/ic_mode_edit_black_24px.svg"></md-icon>
+                        </md-button>
+                    </md-input-container>
+                </div>
+            </md-content>
+            <md-content id="Permissions" layout-gt-sm="row" layout-padding>
+                <md-toolbar class="md-warn">
+                    <div class="md-toolbar-tools">
+                        <h2 class="md-flex">Permessi associati con il ruolo</h2>
+                    </div>
+                </md-toolbar>
+                <div id="PermissionsTable">
+                    @*@Html.Partial("_ListPermissions", Model)*@
+                </div>
+            </md-content>
         </div>
-        @Html.ActionLink("Go to Roles", "RoleIndex", "Admin")
-    </div>
-    
-}
+
+    }
 }

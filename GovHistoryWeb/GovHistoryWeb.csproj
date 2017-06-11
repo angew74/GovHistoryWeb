@@ -183,6 +183,7 @@
   <ItemGroup>
     <Compile Include="Action Filter\RBACAttribute.cs" />
     <Compile Include="api\LoginController.cs" />
+    <Compile Include="api\PermissionsController.cs" />
     <Compile Include="api\RolesController.cs" />
     <Compile Include="api\UserController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Models\ApplicationRolesViewModel.cs" />
     <Compile Include="Models\ManageViewModel.cs" />
     <Compile Include="Models\ApplicationUsersViewModel.cs" />
+    <Compile Include="Models\PermissionsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rbac\RBACModels.cs" />
     <Compile Include="Rbac\RBAC_IdentityExtendedMethods.cs" />
@@ -222,6 +224,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\loader\loader.gif" />
+    <Content Include="Content\images\svg\ic_build_black_24px.svg" />
     <Content Include="Content\images\svg\ic_delete_sweep_black_24px.svg" />
     <Content Include="Content\images\svg\ic_email_black_24px.svg" />
     <Content Include="Content\images\svg\ic_mode_edit_black_24px.svg" />
@@ -267,6 +270,8 @@
     <Content Include="Scripts\app\logincontroller.js" />
     <Content Include="Scripts\app\GovStrap.js" />
     <Content Include="Scripts\app\menucontroller.js" />
+    <Content Include="Scripts\app\permissioncontroller.js" />
+    <Content Include="Scripts\app\rolecontroller.js" />
     <Content Include="Scripts\app\service.js" />
     <Content Include="Scripts\app\usercontroller.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -350,6 +355,21 @@
     <Content Include="Views\Admin\_ListUserRoleTable.cshtml" />
     <Content Include="Views\Admin\_ListUsersTable4Role.cshtml" />
     <Content Include="Views\Admin\_userDetailsEdit.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ConfirmEmailSent.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\OTP4EmailVerification.cshtml" />
+    <Content Include="Views\Account\OTP4PhoneVerification.cshtml" />
+    <Content Include="Views\Account\RequestEmailVerification.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendSecurityCode.cshtml" />
+    <Content Include="Views\Account\TOTPEmailVerification4Registration.cshtml" />
+    <Content Include="Views\Account\VerifySecurityCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

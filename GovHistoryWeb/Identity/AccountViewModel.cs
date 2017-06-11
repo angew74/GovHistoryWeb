@@ -154,19 +154,22 @@ namespace GovHistoryRepository.Identity
         public int Id { get; set; }
 
         [Required]
-        [StringLength(30, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
-        [Display(Name = "Role Name")]
+        [StringLength(30, ErrorMessage = "The {0} deve essere di almeno {2} caratteri.", MinimumLength = 4)]
+        [Display(Name = "Nome Ruolo")]
         public string Name { get; set; }
 
 
         [Required]
-        [StringLength(30, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
-        [Display(Name = "Role Description")]
+        [StringLength(30, ErrorMessage = "The {0} deve essere di almeno {2} caratteri.", MinimumLength = 2)]
+        [Display(Name = "Descrizione Ruolo")]
         public string RoleDescription { get; set; }
 
         [Required]
-        [Display(Name = "Is System Administrator")]
+        [Display(Name = "Amministratore di Sistema")]
         public bool IsSysAdmin { get; set; }
+
+        public string success { get; set; }
+        public string message { get; set; }
     }
 
     public class UserViewModel

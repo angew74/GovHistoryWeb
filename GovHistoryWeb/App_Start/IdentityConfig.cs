@@ -192,15 +192,15 @@ namespace GovHistoryRepository.Identity
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
             // You can write your own provider and plug it in here.
-            manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<ApplicationUser, int>
+            manager.RegisterTwoFactorProvider("Codice Telefono", new PhoneNumberTokenProvider<ApplicationUser, int>
             {
-                MessageFormat = "Your security code is {0}"
+                MessageFormat = "Il tuo codice di sicurezza è {0}"
             });
 
-            manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<ApplicationUser, int>
+            manager.RegisterTwoFactorProvider("Codice Email", new EmailTokenProvider<ApplicationUser, int>
             {
-                Subject = "Security Code",
-                BodyFormat = "Your security code is {0}"
+                Subject = "Codice di sicurezza",
+                BodyFormat = "Il tuo codice di sicurezza è {0}"
             });
 
             manager.EmailService = new EmailService();
@@ -463,6 +463,23 @@ namespace GovHistoryRepository.Identity
             return _retVal;
         }
 
+        public static List<ApplicationRole> GetRoles(int start, int limit)
+        {
+            List<ApplicationRole> _retVal = null;
+            try
+            {
+                using (RoleStore<ApplicationRole, int, ApplicationUserRole> db = new RoleStore<ApplicationRole, int, ApplicationUserRole>(new GovHistoryDbContext()))
+                {
+                    _retVal = db.Roles.Include("PERMISSIONS").OrderByDescending(c=>c.Id).Skip(start).Take(limit).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return _retVal;
+        }
+
         public static ApplicationRole GetRole(int _roleId)
         {
             ApplicationRole _retVal = null;
@@ -559,6 +576,8 @@ namespace GovHistoryRepository.Identity
             return _retVal;
         }
 
+      
+
         public static bool UpdateRole(RoleViewModel _modifiedRole)
         {
             bool _retVal = false;
@@ -630,6 +649,7 @@ namespace GovHistoryRepository.Identity
             }
             catch (Exception)
             {
+                throw;
             }
             return _retVal;
         }
@@ -775,6 +795,59 @@ namespace GovHistoryRepository.Identity
             }
             return _retVal;
         }
+
+        internal static int GetRolesCount()
+        {
+           int _retVal = 0;
+            try
+            {
+                using (RoleStore<ApplicationRole, int, ApplicationUserRole> db = new RoleStore<ApplicationRole, int, ApplicationUserRole>(new GovHistoryDbContext()))
+                {
+                    _retVal = db.Roles.Count();
+                }
+            }
+            catch (Exception)
+            {
+            }
+            return _retVal;
+        }
+
+        internal static List<PERMISSION> GetPermissions(int start, int limit)
+        {
+            List<PERMISSION> _retVal = null;
+            try
+            {
+                using (GovHistoryDbContext db = new GovHistoryDbContext())
+                {
+                    _retVal = db.PERMISSIONS.OrderBy(p => p.PermissionDescription).Include("ROLES").OrderByDescending(c=>c.PermissionId).Skip(start).Take(limit).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return _retVal;
+        }
+
+        internal static int GetPermissionsCount()
+        {
+            int _retVal = 0;
+            try
+            {
+                using (GovHistoryDbContext db = new GovHistoryDbContext())
+                {
+                    _retVal = db.PERMISSIONS.OrderBy(p => p.PermissionDescription).Count();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return _retVal;
+        }
+
+
+
         #endregion
     }
 }

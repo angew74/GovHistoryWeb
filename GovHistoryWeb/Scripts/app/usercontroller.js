@@ -1,4 +1,4 @@
-﻿app.controller('UserController', function ($scope, $mdDialog, $mdToast, UserService) {
+﻿app.controller('UserController', function ($scope, $mdDialog, $mdToast, UserService,RoleService) {
     $scope.CreateUser = function () {
         var user =
        {
@@ -58,7 +58,7 @@
 
 
     $scope.getRuoli = function () {
-        $scope.promise = UserService.LoadRuoli($scope.query, successruoli).$promise;
+        $scope.promise = RoleService.LoadRuoliByParams($scope.query, successruoli).$promise;
     };
 
     $scope.editUser = function(id)
@@ -124,7 +124,7 @@
     {
         $scope.query.IdUser = iduser;
         $("#divLoading").show();
-        var response = UserService.LoadRuoli($scope.query);
+        var response = RoleService.LoadRuoliByParams($scope.query);
         response.then(function (data) {
             if (data.data.success == "true") {
                 $("#divLoading").hide();
